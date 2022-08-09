@@ -20,15 +20,26 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 500
+#  define BUFFER_SIZE 10
 # endif
 
+typedef struct s_list
+{
+	char	*content;
+	int		check_newline;
+	int		new_line_index;
+}t_list;
+
 char	*get_next_line(int fd);
-char	*read_and_stash(char *line, char *buffer, int fd);
-char	*add_stash(char *buffer,char *line);
+char	*read_and_stash(t_list *stash, char *buffer, int fd);
+void	extract_line(t_list *stash, char *buf);
+void	check_newline(char *buffer,t_list *stash);
 size_t	ft_strlen(const char *s);
 void	*ft_memcpy(void *dest, const void *src, size_t len);
 void	*ft_memmove(void *dst, const void *src, size_t len);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dssize);
+char	*ft_strjoin(char const *s1, char const *s2);
+
 
 
 #endif

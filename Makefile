@@ -1,7 +1,7 @@
 NAME 	= 	get_next_line.a
 CC		= 	gcc
-CFLAGS	= 	-Wall -Wextra -Werror
-
+CFLAGS	= 	-Wall -Wextra -Werror 
+# -fsanitize=address -g
 
 SRCS    =	get_next_line.c get_next_line_utils.c
 OBJS	=	$(SRCS:.c=.o)
@@ -19,7 +19,8 @@ ${NAME}: ${OBJS}
 %.o: %.c
 	@echo "$(GREEN)Compiling:$(NORMAL)"
 	@echo "making object file" $< "->" $@
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $< -g
+
 
 clean:
 	@echo "$(RED)Removing all object files...$(NORMAL)"

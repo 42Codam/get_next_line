@@ -2,7 +2,6 @@
 .vscode
 a.out
 test
-main.c
 Libft/
 *.o
 *.a

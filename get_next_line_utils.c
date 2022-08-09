@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (counter);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t len)
+void	*	ft_memcpy(void *dest, const void *src, size_t len)
 {
 	size_t	i;
 

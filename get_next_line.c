@@ -1,87 +1,94 @@
 #include "get_next_line.h"
+#include <limits.h>
 
 /* Uses read() to add characters to the stash */
-
 /*  Adds the content of our buffer to the end of our stash */
-
-
 /* 
 ** Extract all characters from our stash and stores them in out line
 ** Stopping after the first \n it encounters
 */
-
 /* 
 ** After extracting the line that was read, we don't need those characters anymore.
 ** this function clears the stash so only the characters that have not been returned at
 ** the end of get_next_line() remain in our static stash */
 /* Uses read() to add characters to the stash */
-char *read_and_stash(t_list *stash, char *buffer, int fd)
+char *read_and_stash(char *stash, int fd)
 {
-	int		ret = 1;
-	char	*new_line;
+	int		readed;
+	char	*line;
+	char	buf[BUFFER_SIZE+1];
 
-	while(1)
+	readed = 1;
+	while(readed != 0)
 	{
-		ret = read(fd, buffer, BUFFER_SIZE);
-		
-		if (ret <= 0)
-			return (NULL);
-		check_newline(buffer,stash);
-		if(stash->check_newline == 0)
+		readed = read(fd, buf, BUFFER_SIZE);
+		buf[readed] = '\0';
+		if(!ft_strchr(buf,'\n'))
+			line = ft_strjoin_to_stash(stash,buf);
+		else if(ft_strchr(buf,'\n'))
 		{
-			buffer[ret] = '\0';
-			stash->content = ft_strjoin(stash->content,buffer);
-		}
-		else if(stash->check_newline == 1)
-		{
-			extract_line(stash,buffer);
-			new_line = stash->content;
+			line = ft_strjoin_to_stash(stash,buf);
 			break;
 		}
 	}
-	return (new_line);
+	if (readed == 0)
+		return NULL;
+	return (line);
 }
 
-void check_newline(char *buffer,t_list *stash)
+int check_newline(char *buffer,int ret)
 {
 	int offset_nl;
 
-	stash->check_newline = 0;
 	offset_nl = 0;
-	while(offset_nl <= BUFFER_SIZE)
+	while(offset_nl <= ret)
 	{
 		if (buffer[offset_nl] == '\n')
 		{
-			stash->check_newline = 1;
-			stash->new_line_index = offset_nl;
+			return (offset_nl);
 		}
 		offset_nl++;
 	}
+	return (0);
 }
 
-void extract_line(t_list *stash, char *buf)
+char *extract_line(char *stash)
 {
-	char *extract_from_buffer;
+	char	*extract_from_buffer;
+	char	*temp;
+	int		nl_index;
 
-	extract_from_buffer = malloc(sizeof(char) * (stash->new_line_index+1));
-	if (BUFFER_SIZE == 1)
-		stash->new_line_index++;
-	ft_strlcpy(extract_from_buffer,buf,(stash->new_line_index+1));
-	stash->content = ft_strjoin(stash->content,extract_from_buffer);
+	nl_index = check_newline(buf,ret);
+	temp = malloc(sizeof(char) * (ret - nl_index - 1));
+		printf("Ret %d, nl_index %d\n",ret,nl_index);
+	while (ret - nl_index > 0)
+	{
+		temp[ret - nl_index - 2] = buf[ret-1];
+		ret--;
+	}
+	extract_from_buffer = malloc(sizeof(char) * nl_index + 1);
+	ft_strlcpy(extract_from_buffer, buf);
+	extract_from_buffer = ft_strjoin_to_stash(stash,extract_from_buffer);
+	stash = temp;
+	return(extract_from_buffer);
 }
 
 char *get_next_line(int fd)
 {
-	static t_list	*stash = NULL;
-	char			*buffer;
-	char			*line;
+	
+	char		*line;
+	static char	*content;
+	char		buf[BUFFER_SIZE+1];
 
-	stash = malloc(sizeof * stash);
-	stash->content = malloc(sizeof(char *) * 1);
-	stash->content = "";
-	buffer = malloc(sizeof * buffer * (BUFFER_SIZE + 1));
-	if(fd < 0 || BUFFER_SIZE <= 0 || !buffer || !stash->content)
+	if(fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT32_MAX)
 		return NULL;
-	line = read_and_stash(stash, buffer, fd);
+	content = read_and_stash(content, fd);
+	if (!content)
+		return(NULL);
+	line = extract_line(content);
+	content = update_stash(content);
 	return (line);
 }
+
+	/* if(*stash->content)
+		line = stash->content; */

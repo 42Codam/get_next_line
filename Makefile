@@ -1,9 +1,9 @@
-NAME 	= 	get_next_line.a
+NAME 	= 	get_next_line
 CC		= 	gcc
 CFLAGS	= 	-Wall -Wextra -Werror 
 # -fsanitize=address -g
 
-SRCS    =	get_next_line.c get_next_line_utils.c
+SRCS    =	get_next_line.c get_next_line_utils.c main.c
 OBJS	=	$(SRCS:.c=.o)
 
 GREEN = \033[38;5;2m
@@ -12,15 +12,13 @@ RED = \033[38;5;1m
 BLUE = \033[38;5;4m
 
 all: ${NAME}
+	
 
 ${NAME}: ${OBJS}
-	@ar rc $@ $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $@ 
 
-%.o: %.c
-	@echo "$(GREEN)Compiling:$(NORMAL)"
-	@echo "making object file" $< "->" $@
-	@$(CC) $(CFLAGS) -o $@ -c $< -g
-
+run: $(NAME)
+	@./$(NAME) test
 
 clean:
 	@echo "$(RED)Removing all object files...$(NORMAL)"

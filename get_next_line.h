@@ -20,24 +20,21 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1
 # endif
-
-typedef struct
-{
-	char	*content;
-	int		readed;
-}new_line;
 
 // get_next_line.c
 char	*get_next_line(int fd);
-char	*read_and_stash(new_line *stash, int fd);
-int		check_newline(char *buffer,int ret);
+char	*read_and_stash(char *stash, int fd);
+int		check_newline(char *buffer);
+char	*extract_line(char *stash);
+char	*new_content(char *content);
+
 // size_t	ft_strlen(const char *s);
 // Utils
 char	*ft_strjoin_to_stash(char *content, char *src);
 size_t	ft_strlen(const char *s);
-void	ft_strlcpy(char *dst,const char *src);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dssize);
 char	*ft_strchr(const char *s, int c);
 
 

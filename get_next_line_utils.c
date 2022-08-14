@@ -27,23 +27,24 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-void ft_strlcpy(char *dst,const char *src)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dssize)
 {
-	int index;
+	size_t	i;
+	int		src_len;
 
-	index = 0;
-	while (src[index] != '\0')
+	src_len = ft_strlen(src);
+	if (!dssize || !src)
+		return (src_len);
+	i = 0;
+	while (src[i] != '\0' && i < dssize - 1)
 	{
-		dst[index] = src[index];
-		if(src[index] == '\n')
-		{
-			index++;
-			break;
-		}
-		index++;
+		dst[i] = src[i];
+		i++;
 	}
-	dst[index] = '\0';
+	dst[i] = '\0';
+	return (src_len);
 }
+
 
 char	*ft_strjoin_to_stash(char *content, char *src)
 {
@@ -61,7 +62,7 @@ char	*ft_strjoin_to_stash(char *content, char *src)
 		s_ptr[i] = content[i];
 		i++;
 	}
-	ft_strlcpy(&s_ptr[i],src);
+	ft_strlcpy(&s_ptr[i],src,total_length+1);
 	//free(content);
 	return(s_ptr);
 }

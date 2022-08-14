@@ -3,5 +3,6 @@
 a.out
 test
 Libft/
+gnlTester/
 *.o
 *.a

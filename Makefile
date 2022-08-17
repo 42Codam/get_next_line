@@ -26,9 +26,9 @@ clean:
 	@echo "$(GREEN)Object files succesfully removed!$(NORMAL)"
 
 fclean: clean
-	@echo "$(RED)Removing libft.a$(NORMAL)"
+	@echo "$(RED)Removing executable file$(NORMAL)"
 	@rm -f ${NAME}
-	@echo "$(GREEN)libft.a removed!"
+	@echo "$(GREEN)Executable file removed!"
 	
 re: fclean all
 

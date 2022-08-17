@@ -45,24 +45,24 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dssize)
 	return (src_len);
 }
 
-
 char	*ft_strjoin_to_stash(char *content, char *src)
 {
 	char	*s_ptr;
 	size_t	total_length;
 	int		i;
 	
-	i = 0;
-	total_length = ft_strlen(content) + ft_strlen(src);
 	if(!content || !src)
 		return (NULL);
+	total_length = ft_strlen(content) + ft_strlen(src);
 	s_ptr = (char *)malloc(sizeof(char)*(total_length+1));
+	i = 0;
+	if (!s_ptr)
+		return (NULL); // free #1
 	while(content[i] != '\0')
 	{
 		s_ptr[i] = content[i];
 		i++;
 	}
 	ft_strlcpy(&s_ptr[i],src,total_length+1);
-	//free(content);
-	return(s_ptr);
+	return(free(content),s_ptr); // free #1
 }

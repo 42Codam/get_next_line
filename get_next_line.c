@@ -12,15 +12,17 @@
 ** this function clears the stash so only the characters that have not been returned at
 ** the end of get_next_line() remain in our static stash */
 /* Uses read() to add characters to the stash */
+
 char *read_and_stash(char *stash, int fd)
 {
-	int	readed;
-	char		buf[BUFFER_SIZE+1];
+	int		readed;
+	char	buf[BUFFER_SIZE+1];
 
 	readed = 1;
 	while(!ft_strchr(stash,'\n') && readed != 0)
 	{
 		readed = read(fd, buf, BUFFER_SIZE);
+		// printf("%s\n",buf);
 		if(readed == 0)
 			break;
 		buf[readed] = '\0';
@@ -29,8 +31,12 @@ char *read_and_stash(char *stash, int fd)
 			break;
 	}
 	if (!*stash && readed == 0)
+	{
+		// printf("FINAL!\n");
+		free (stash);
 		return NULL;
-		// printf("New stash |%s|\n",stash);
+	}
+	// printf("New stash |%s|\n",stash);
 	return (stash);
 }
 
@@ -56,6 +62,8 @@ char *extract_line(char *stash)
 		char	*temp;
 		nl_index = check_newline(stash)+2;
 		temp = malloc(sizeof(char) * (nl_index));
+		if(!temp)
+			return (NULL);
 		ft_strlcpy(temp,stash,(nl_index));
 		stash = temp;
 	}
@@ -80,7 +88,7 @@ char *new_content(char *content)
 		nl_index++;
 	}
 	temp[i] = '\0';
-	free(content);
+	// free(content);
 	// printf("New Content: |%s|\n",temp);
 	return (temp);
 }
@@ -90,14 +98,16 @@ char *get_next_line(int fd)
 	
 	char		*line;
 	static char	*content;
-
+	
+	if(fd < 0 || BUFFER_SIZE <= 0 || read(fd,NULL,0) == -1)
+		return NULL;
 	if(!content)
 	{
-		content = malloc(sizeof(char)*1);
-		content = "";
+		content = malloc(sizeof(char) * 1); //malloc #1
+		if(!content)
+			return (NULL);
+		content[0] = '\0';
 	}
-	if(fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT32_MAX)
-		return NULL;
 	content = read_and_stash(content, fd);
 	// printf("Content: |%s|\n",content);
 	if (!content)
@@ -106,5 +116,6 @@ char *get_next_line(int fd)
 	content = new_content(content);
 	// printf("New Content: |%s|\n",content);
 	// printf("Line: |%s|\n",line);
+	// while (1){}
 	return (line);
 }

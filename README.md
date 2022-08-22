@@ -1,7 +1,6 @@
 
 
 # <p align="center">Project <a style="color:gray;text-decoration:none;" href="https://github.com/AtibQur/get_next_line/blob/master/en.subject.pdf">Get_next_line</a> 📖✍🏼️</h1>
-<p><img align="right" src="score.png" alt="Score" width="125" height="125"></p>
 <h2> Description Get_next_line</h2>   
 <p>The goal of this project is to use the function <em>get_next_line();</em> to read from a file descriptor and return a line. Every time the function is called, an extra line returns until the last line is returned. <br>
 The aim of this project is to learn how static variables work together with reading/writing lines from a file descriptor.

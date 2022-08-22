@@ -26,7 +26,7 @@ The aim of this project is to learn how static variables work together with read
 *To build the programm there is only a few steps: First of all, you can download the repository through the following steps in any shell of your preference:*
 <br>
 <pre>
-git clone git@github.com:AtibQur/get_next_line.git
+git clone git@github.com:42Codam/get_next_line.git
 cd get_next_line
 make
 </pre>

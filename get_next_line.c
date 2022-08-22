@@ -22,13 +22,12 @@ char *read_and_stash(char *stash, int fd)
 	while(!ft_strchr(stash,'\n') && readed != 0)
 	{
 		readed = read(fd, buf, BUFFER_SIZE);
-		// printf("%s\n",buf);
 		if(readed == 0)
 			break;
 		buf[readed] = '\0';
 		stash = ft_strjoin_to_stash(stash,buf);
 		if(ft_strchr(buf,'\n'))
-			break;
+			readed = 0;
 	}
 	if (!*stash && readed == 0)
 	{
@@ -36,6 +35,8 @@ char *read_and_stash(char *stash, int fd)
 		free (stash);
 		return NULL;
 	}
+	//printf("%d\n",readed);
+	
 	// printf("New stash |%s|\n",stash);
 	return (stash);
 }
@@ -109,13 +110,15 @@ char *get_next_line(int fd)
 		content[0] = '\0';
 	}
 	content = read_and_stash(content, fd);
-	// printf("Content: |%s|\n",content);
+	//printf("Content: |%s|\n",content);
 	if (!content)
 		return(NULL);
 	line = extract_line(content);
 	content = new_content(content);
+	if (line == NULL)
+		free (content);
 	// printf("New Content: |%s|\n",content);
 	// printf("Line: |%s|\n",line);
-	// while (1){}
+	while (1){}
 	return (line);
 }

@@ -38,7 +38,7 @@ int	main(int argc, char const *argv[])
 		{
 			break;
 		}
-		printf("|%s|",line);
+		printf("%s",line);
 		free(line);
 	}
 	//while(1){}

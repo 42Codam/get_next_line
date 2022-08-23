@@ -20,12 +20,12 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 42
 # endif
 
 // get_next_line.c
 char	*get_next_line(int fd);
-char	*read_and_stash(char *stash, int fd);
+char	*read_and_stash(char *content, int fd);
 int		check_newline(char *buffer);
 char	*extract_line(char *stash);
 char	*new_content(char *content);
@@ -34,7 +34,7 @@ char	*new_content(char *content);
 // Utils
 char	*ft_strjoin_to_stash(char *content, char *src);
 size_t	ft_strlen(const char *s);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dssize);
+void	ft_strlcpy(char *dst, const char *src, size_t dssize);
 char	*ft_strchr(const char *s, int c);
 
 

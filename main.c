@@ -36,6 +36,7 @@ int	main(int argc, char const *argv[])
 		line = get_next_line(fd);
 		if (line == NULL)
 		{
+			free(line);
 			break;
 		}
 		printf("%s",line);

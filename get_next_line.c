@@ -13,32 +13,27 @@
 ** the end of get_next_line() remain in our static stash */
 /* Uses read() to add characters to the stash */
 
-char *read_and_stash(char *stash, int fd)
+char *read_and_stash(char *content, int fd)
 {
 	int		readed;
 	char	buf[BUFFER_SIZE+1];
 
+	buf[0] = '\0';
 	readed = 1;
-	while(!ft_strchr(stash,'\n') && readed != 0)
+	
+	while(!ft_strchr(buf, '\n') && readed != 0)
 	{
 		readed = read(fd, buf, BUFFER_SIZE);
-		if(readed == 0)
-			break;
 		buf[readed] = '\0';
-		stash = ft_strjoin_to_stash(stash,buf);
-		if(ft_strchr(buf,'\n'))
-			readed = 0;
+		content = ft_strjoin_to_stash(content, buf);	
 	}
-	if (!*stash && readed == 0)
+	if (*content == 0)
 	{
-		// printf("FINAL!\n");
-		free (stash);
+		//printf("Cikiyom %s\n", content);
+		free (content);
 		return NULL;
 	}
-	//printf("%d\n",readed);
-	
-	// printf("New stash |%s|\n",stash);
-	return (stash);
+	return (content);
 }
 
 int check_newline(char *str)
@@ -57,18 +52,21 @@ int check_newline(char *str)
 
 char *extract_line(char *stash)
 {
-	if (ft_strchr(stash,'\n'))
+	int		nl_index;
+
+	nl_index = 0;
+	if (ft_strchr(stash, '\n'))
 	{
-		int		nl_index;
 		char	*temp;
-		nl_index = check_newline(stash)+2;
+		nl_index = check_newline(stash) + 2;
 		temp = malloc(sizeof(char) * (nl_index));
 		if(!temp)
 			return (NULL);
-		ft_strlcpy(temp,stash,(nl_index));
+		ft_strlcpy(temp, stash, (nl_index));
+		free (stash);
 		stash = temp;
 	}
-	return(stash);
+	return (stash);
 }
 
 char *new_content(char *content)
@@ -78,47 +76,45 @@ char *new_content(char *content)
 	int		nl_index;
 
 	i = 0;
-	nl_index = check_newline(content) + 1;
-	temp = malloc(sizeof(char) * (ft_strlen(content) - nl_index + 1));
+	
+	nl_index = check_newline(content);
+	//printf("nl index: %d\n",nl_index);
+	temp = malloc(sizeof(char) * (ft_strlen(content) - nl_index));
 	if(!temp)
 		return NULL;
 	while (content[nl_index] != '\0')
 	{
-		temp[i] = content[nl_index];
+		temp[i] = content[nl_index+1];
 		i++;
 		nl_index++;
 	}
 	temp[i] = '\0';
-	// free(content);
-	// printf("New Content: |%s|\n",temp);
+	//printf ("temp: |%s|\n",temp);
 	return (temp);
 }
 
 char *get_next_line(int fd)
 {
-	
 	char		*line;
 	static char	*content;
 	
-	if(fd < 0 || BUFFER_SIZE <= 0 || read(fd,NULL,0) == -1)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
 		return NULL;
-	if(!content)
+	if (!content)
 	{
-		content = malloc(sizeof(char) * 1); //malloc #1
-		if(!content)
+		content = malloc(sizeof(char)); //malloc #1
+		if (!content)
 			return (NULL);
 		content[0] = '\0';
 	}
 	content = read_and_stash(content, fd);
-	//printf("Content: |%s|\n",content);
 	if (!content)
 		return(NULL);
 	line = extract_line(content);
-	content = new_content(content);
-	if (line == NULL)
+	if (!line)
 		free (content);
-	// printf("New Content: |%s|\n",content);
-	// printf("Line: |%s|\n",line);
-	while (1){}
+	content = new_content(content);
+	
+	// while (1){}
 	return (line);
 }

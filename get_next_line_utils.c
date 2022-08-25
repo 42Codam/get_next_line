@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   get_next_line_utils.c                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rbulbul <rbulbul@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/08/25 15:48:42 by rbulbul       #+#    #+#                 */
+/*   Updated: 2022/08/25 15:49:55 by rbulbul       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
-
-
 
 size_t	ft_strlen(const char *s)
 {
@@ -11,7 +21,6 @@ size_t	ft_strlen(const char *s)
 		counter++;
 	return (counter);
 }
-
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -51,16 +60,15 @@ char	*ft_strjoin_to_stash(char *content, char *src)
 	int		i;
 
 	total_length = ft_strlen(content) + ft_strlen(src);
-	s_ptr = (char *)malloc(sizeof(char)*(total_length+1));
+	s_ptr = (char *)malloc(sizeof(char) * (total_length + 1));
 	if (!s_ptr)
-		return (NULL); // free #1
+		return (NULL);
 	i = 0;
-	while(content[i] != '\0')
+	while (content[i] != '\0')
 	{
 		s_ptr[i] = content[i];
 		i++;
 	}
-	//printf("Buffer: |%s|\n",src);
 	ft_strlcpy(&s_ptr[i], src, ft_strlen(src) + 1);
-	return (free(content),s_ptr); // free #1
+	return (free(content), s_ptr);
 }

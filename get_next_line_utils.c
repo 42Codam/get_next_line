@@ -1,5 +1,7 @@
 #include "get_next_line.h"
 
+
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	counter;
@@ -48,23 +50,17 @@ char	*ft_strjoin_to_stash(char *content, char *src)
 	size_t	total_length;
 	int		i;
 
-	if (!content)
-	{
-		content = malloc(sizeof(char)+1); //malloc #1
-		content[0] = '\0';
-	}
-	if(!content || !src)
-		return (NULL);
 	total_length = ft_strlen(content) + ft_strlen(src);
 	s_ptr = (char *)malloc(sizeof(char)*(total_length+1));
 	if (!s_ptr)
-		return (free(content),NULL); // free #1
+		return (NULL); // free #1
 	i = 0;
 	while(content[i] != '\0')
 	{
 		s_ptr[i] = content[i];
 		i++;
 	}
+	//printf("Buffer: |%s|\n",src);
 	ft_strlcpy(&s_ptr[i], src, ft_strlen(src) + 1);
 	return (free(content),s_ptr); // free #1
 }

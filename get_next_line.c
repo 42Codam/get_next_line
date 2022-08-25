@@ -17,22 +17,26 @@ char *read_and_stash(char *content, int fd)
 {
 	int		readed;
 	char	buf[BUFFER_SIZE+1];
+	//printf("Content giris |%s|\n", content);
 
 	buf[0] = '\0';
 	readed = 1;
-	
+	if(ft_strchr(content, '\n'))
+		return (content);
 	while(!ft_strchr(buf, '\n') && readed != 0)
 	{
 		readed = read(fd, buf, BUFFER_SIZE);
+		if (readed == 0)
+			break;
 		buf[readed] = '\0';
 		content = ft_strjoin_to_stash(content, buf);	
 	}
 	if (*content == 0)
 	{
-		//printf("Cikiyom %s\n", content);
 		free (content);
 		return NULL;
 	}
+	//printf("Content cikis |%s|\n\n", content);
 	return (content);
 }
 
@@ -114,7 +118,6 @@ char *get_next_line(int fd)
 	if (!line)
 		free (content);
 	content = new_content(content);
-	
 	// while (1){}
 	return (line);
 }

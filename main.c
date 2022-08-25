@@ -31,17 +31,17 @@ int	main(int argc, char const *argv[])
 		printf("Error while opening the file\n");
 		return (0);
 	}
+	int i = 0;
 	while(1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-		{
-			free(line);
 			break;
-		}
+		i++;
 		printf("%s",line);
 		free(line);
 	}
+	printf("Total Line: %d\n",i);
 	//while(1){}
 	close(fd);
 }

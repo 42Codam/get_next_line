@@ -20,14 +20,14 @@
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1
 # endif
 
 // get_next_line.c
 char	*get_next_line(int fd);
 char	*read_and_stash(char *content, int fd);
 int		check_newline(char *buffer);
-char	*extract_line(char *stash);
+char	*extract_line(char *content);
 char	*new_content(char *content);
 
 // size_t	ft_strlen(const char *s);

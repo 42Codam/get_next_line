@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.c                                    :+:    :+:            */
+/*   get_next_line_bonus.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rbulbul <rbulbul@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/25 15:48:37 by rbulbul       #+#    #+#                 */
-/*   Updated: 2022/08/25 17:19:01 by rbulbul       ########   odam.nl         */
+/*   Updated: 2022/08/25 17:28:33 by rbulbul       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
+#include <limits.h>
 
 char	*read_and_stash(char *content, int fd)
 {
@@ -95,23 +96,23 @@ char	*new_content(char *content)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*content;
+	static char	*content[OPEN_MAX + 1];
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) == -1)
 		return (NULL);
-	if (!content)
+	if (!content[fd])
 	{
-		content = malloc(sizeof(char));
-		if (!content)
+		content[fd] = malloc(sizeof(char));
+		if (!content[fd])
 			return (NULL);
-		content[0] = '\0';
+		content[fd][0] = '\0';
 	}
-	content = read_and_stash(content, fd);
-	if (!content)
+	content[fd] = read_and_stash(content[fd], fd);
+	if (!content[fd])
 		return (NULL);
-	line = extract_line(content);
+	line = extract_line(content[fd]);
 	if (!line)
-		return (free_content(content));
-	content = new_content(content);
+		return (free_content(content[fd]));
+	content[fd] = new_content(content[fd]);
 	return (line);
 }

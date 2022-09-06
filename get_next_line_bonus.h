@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.h                                    :+:    :+:            */
+/*   get_next_line_bonus.h                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rbulbul <rbulbul@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/05/16 18:07:34 by rbulbul       #+#    #+#                 */
-/*   Updated: 2022/08/25 17:04:30 by rbulbul       ########   odam.nl         */
+/*   Updated: 2022/08/25 17:20:56 by rbulbul       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdlib.h>
 # include <unistd.h>

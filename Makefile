@@ -18,7 +18,7 @@ ${NAME}: ${OBJS}
 	@$(CC) $(CFLAGS) $(OBJS) -o $@ 
 
 run: $(NAME)
-	@./$(NAME) test
+	@./$(NAME) test test1 test2 test3
 
 clean:
 	@echo "$(RED)Removing all object files...$(NORMAL)"
